@@ -13,18 +13,18 @@ const (
 func main() {
 	var command string
 	var checkAuth bool
-	userList := []string{"user1_password1", "user2_password2"}
+	userList := []string{"user1_password1", "user2_pass2"}
 	productList := make([]string, 0, 10)
 
-	_ = productList
+	fmt.Println("Список команд:")
+	fmt.Printf("Команда %s - выход из приложения\n", exit)
+	fmt.Printf("Команда %s - авторизацияя\n", auth)
+	fmt.Printf("Команда %s - регистрация\n", reg)
+	fmt.Printf("Команда %s - добавление продукта (необходимо предварительно авторизоваться)\n", addProduct)
+	fmt.Printf("Команда %s - покупка и очистка корзины (необходимо предварительно авторизоваться)\n", order)
 outerLoop:
 	for command != exit {
-		fmt.Println("Введите команду")                                                                           // Сделать красивый вывод, вывести список команд на этом шаге
-		fmt.Printf("Команда %s - выход из приложения\n", exit)                                                   // Сделать красивый вывод, вывести список команд на этом шаге
-		fmt.Printf("Команда %s - авторизацияя\n", auth)                                                          // Сделать красивый вывод, вывести список команд на этом шаге
-		fmt.Printf("Команда %s - регистрация\n", reg)                                                            // Сделать красивый вывод, вывести список команд на этом шаге
-		fmt.Printf("Команда %s - добавление продукта (необходимо предваритально авторизоваться)\n", addProduct)  // Сделать красивый вывод, вывести список команд на этом шаге
-		fmt.Printf("Команда %s - покупка и очистка корзины (необходимо предваритально авторизоваться)\n", order) // Сделать красивый вывод, вывести список команд на этом шаге
+		fmt.Println("Введите команду")
 		fmt.Scan(&command)
 
 		switch command {
@@ -32,7 +32,7 @@ outerLoop:
 			break
 		case reg:
 			fmt.Println("Введите логин и пароль в таком виде login_passwor")
-			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
+			fmt.Scan(&command)
 
 			for _, v := range userList {
 				if v == command {
@@ -54,7 +54,7 @@ outerLoop:
 
 			for _, v := range userList {
 				if v == command {
-					fmt.Println("Добро пожаловать в магази")
+					fmt.Println("Добро пожаловать в магазин")
 					checkAuth = true
 					break
 				} else {
@@ -74,6 +74,7 @@ outerLoop:
 			for _, v := range productList {
 				if v == command {
 					fmt.Println("Такой продукт уже есть")
+					continue outerLoop
 				}
 			}
 
@@ -97,7 +98,3 @@ outerLoop:
 		}
 	}
 }
-
-// Реализовать следующие АПИ
-// add_product - добавить продукт который вводиться с консоли в productList
-// order - выводит сообщение что вы купили и очищает корзину
