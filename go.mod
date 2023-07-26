@@ -1,3 +1,3 @@
 module github.com/Shemistan/Lesson_2
 
-go 1.21rc3
+go 1.19
