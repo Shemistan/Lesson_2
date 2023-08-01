@@ -1,3 +1,3 @@
-module github.com/Shemistan/Lesson_2
+module github.com/kamolisrailov/Lesson_2.git
 
-go 1.21rc3
+go 1.20
