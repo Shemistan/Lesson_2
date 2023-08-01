@@ -32,41 +32,6 @@ func main() {
 	var command int = 99
 
 	for command != Exit {
-		exec.Command("clear").Run()
-		if !isAuth {
-
-			fmt.Println("Главное меню:\n[1] Войти\n[2] Зарегистрироваться\n[0] Выйти")
-			cin("Введите команду: ", &command)
-
-			switch command {
-			case SignIn:
-				{
-					var logdata model.UserLogin
-
-					cin("Введите логин: ", &logdata.Login)
-					cin("Введите пароль: ", &logdata.Password)
-					user = controller.SignIn(logdata, &db)
-				}
-			case SignUp:
-				{
-					var newUser model.User
-
-					cin("Введите имя: ", &newUser.FullName)
-					cin("Введите номер телефона: ", &newUser.PhoneNumber)
-					cin("Введите баланс: ", &newUser.Balance)
-					cin("Создайте логин: ", &newUser.Login)
-					cin("Создайте пароль: ", &newUser.Password)
-
-					user = controller.SignUp(newUser, &db)
-				}
-			case Exit:
-				return
-			default:
-				fmt.Println("Неверная команда")
-			}
-			isAuth = true
-			continue
-		}
 
 		if isAuth {
 			fmt.Println("Меню:\n[1] Добавить продукт\n[2] Посмотреть список продуктов\n[3] Корзина\n[0] Выйти")
@@ -101,7 +66,6 @@ func main() {
 					cin("Введите номер продукта: ", &command)
 					if command > len(products) || command < 0 {
 						fmt.Println("Неверный номер продукта")
-						exec.Command("pause").Run()
 						goto shop
 					}
 
@@ -119,13 +83,10 @@ func main() {
 					var totalSum float64 = 0
 
 				cart:
-					exec.Command("cls").Run()
-
 					fmt.Println("Корзина:")
 
 					if len(cart) == 0 {
 						fmt.Println("Корзина пуста")
-						exec.Command("pause").Run()
 						continue
 					}
 
@@ -142,7 +103,6 @@ func main() {
 					cin("Введите номер: ", &command)
 					if command > len(cart)+1 || command < 0 {
 						fmt.Println("Неверный номер продукта")
-						exec.Command("pause").Run()
 						goto cart
 					}
 
@@ -153,7 +113,6 @@ func main() {
 					if command == len(cart)+1 {
 						if totalSum > user.Balance {
 							fmt.Println("Недостаточно средств")
-							exec.Command("pause").Run()
 							goto cart
 						}
 
@@ -166,6 +125,41 @@ func main() {
 			default:
 				fmt.Println("Неверная команда")
 			}
+		}
+
+		if !isAuth {
+
+			fmt.Println("Главное меню:\n[1] Войти\n[2] Зарегистрироваться\n[0] Выйти")
+			cin("Введите команду: ", &command)
+
+			switch command {
+			case SignIn:
+				{
+					var logdata model.UserLogin
+
+					cin("Введите логин: ", &logdata.Login)
+					cin("Введите пароль: ", &logdata.Password)
+					user = controller.SignIn(logdata, &db)
+				}
+			case SignUp:
+				{
+					var newUser model.User
+
+					cin("Введите имя: ", &newUser.FullName)
+					cin("Введите номер телефона: ", &newUser.PhoneNumber)
+					cin("Введите баланс: ", &newUser.Balance)
+					cin("Создайте логин: ", &newUser.Login)
+					cin("Создайте пароль: ", &newUser.Password)
+
+					user = controller.SignUp(newUser, &db)
+				}
+			case Exit:
+				return
+			default:
+				fmt.Println("Неверная команда")
+			}
+			isAuth = true
+			continue
 		}
 	}
 }
