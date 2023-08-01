@@ -3,16 +3,20 @@ package main
 import "fmt"
 
 const (
-	exit = "exit"
-	auth = "auth"
-	reg  = "reg"
+	exit        = "exit"
+	auth        = "auth"
+	reg         = "reg"
+	add_product = "add_product"
+	order       = "order"
 )
 
 func main() {
 	var command string
-	userList := []string{"user1_password1", "user1_password1"}
-	productList := make([]string, 0, 10)
-
+	var productCount uint
+	var currentUserId int = -1
+	userList := []string{"user1_password1"}
+	productList := make([][]string, 10, 10)
+	productCountList := make([][]uint, 10, 10)
 	_ = productList
 	for command != exit {
 		fmt.Println("Введите команду") // Сделать красивый вывод, вывести список команд на этом шаге
@@ -22,7 +26,7 @@ func main() {
 		case exit:
 			break
 		case reg:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
 			userList = append(userList, command)
 
@@ -31,19 +35,42 @@ func main() {
 
 			fmt.Println(userList)
 		case auth:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
 
-			for _, v := range userList {
+			for userId, v := range userList {
 				if v == command {
-					fmt.Println("Добро пожаловать в магази")
-
+					fmt.Println("Добро пожаловать в магазин")
+					currentUserId = userId
 				} else {
 					fmt.Println("Вы не зарегистрированны")
 				}
+			}
+		case add_product:
+			if currentUserId == -1 {
+				fmt.Println("Вы не авторизованы")
+				return
+			}
 
+			fmt.Println("Введите название продукта и количество в таком виде Pizza 2")
+			fmt.Scan(&command, &productCount)
+
+			productList[currentUserId] = append(productList[currentUserId], command)
+			productCountList[currentUserId] = append(productCountList[currentUserId], productCount)
+
+		case order:
+			if currentUserId == -1 {
+				fmt.Println("Вы не авторизованы")
+				return
+			}
+
+			fmt.Println("Заказ выполнен успешно. ваши продукты")
+			fmt.Println("Название   -   Количество")
+			for productId, product := range productList[currentUserId] {
+				fmt.Println(product, " - ", productCountList[currentUserId][productId])
 			}
 		}
+
 	}
 }
 
