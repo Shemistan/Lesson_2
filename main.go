@@ -3,10 +3,12 @@ package main
 import "fmt"
 
 const (
-	exit = "exit"
-	auth = "auth"
-	reg  = "reg"
-	help = "help"
+	exit        = "exit"
+	auth        = "auth"
+	reg         = "reg"
+	help        = "help"
+	add_product = "add_product"
+	order       = "order"
 )
 
 func main() {
@@ -52,12 +54,12 @@ func main() {
 			} else {
 				fmt.Println("Пользователь не найден")
 			}
-		case "add_product":
+		case add_product:
 			fmt.Println("Пожалуйста введите название продукта: ")
 			fmt.Scanln(&command)
 			productList = append(productList, command)
 			fmt.Printf("Продукт %s был добавлен успешно! \n", command)
-		case "order":
+		case order:
 			fmt.Println("Вы успешно совершили покупку!")
 			fmt.Println("Корзина: ")
 			for i := 0; i < len(productList); i++ {
