@@ -1,16 +1,19 @@
 package main
 
-import ("fmt")
+import (
+	"fmt"
+)
 
 const (
-	exit = "exit"
-	auth = "auth"
-	reg  = "reg"
-	help = "help"
-	addProduct = "add_product"
+	exit          = "exit"
+	auth          = "auth"
+	reg           = "reg"
+	help          = "help"
+	addProduct    = "add_product"
 	show_products = "show_products"
-	add_to_cart = "add_to_cart"
-	cancel = "cancel"
+	add_to_cart   = "add_to_cart"
+	cancel        = "cancel"
+	buy           = "buy"
 )
 
 func main() {
@@ -21,9 +24,9 @@ func main() {
 	fmt.Println(productList)
 	_ = productList
 	for command != exit {
-		 // Сделать красивый вывод, вывести список команд на этом шаге
-		
-		fmt.Println("Введите команду:")
+		// Сделать красивый вывод, вывести список команд на этом шаге
+
+		fmt.Print("Введите команду:")
 
 		fmt.Scan(&command)
 
@@ -32,11 +35,12 @@ func main() {
 			break
 		case help:
 			fmt.Println("команды:")
-			fmt.Println("exit - Выход из программы")
-			fmt.Println("auth - Авторизация")
-			fmt.Println("reg - Регистрация")
-			fmt.Println("add_product - Добавление продуктов")
-			fmt.Println("show_products - Отображение продуктов")
+			fmt.Printf("%s - Выход из программы\n", exit)
+			fmt.Printf("%s - Авторизация\n", auth)
+			fmt.Printf("%s - Регистрация\n", reg)
+			fmt.Printf("%s - Добавление продуктов\n", addProduct)
+			fmt.Printf("%s - Отображение продуктов\n", show_products)
+			fmt.Printf("%s - ДОбавление в корзинку\n", add_to_cart)
 			fmt.Println()
 		case reg:
 			fmt.Println("Введите логин и пароль в таком виде login_password")
@@ -63,51 +67,54 @@ func main() {
 		case addProduct:
 			fmt.Println("Добавьте продукты через [enter]")
 			var input string
-			for ok := true; ok; ok = (input != "cancel"){
-				
+			var end string
+			for ok := true; ok; ok = (input != "end") {
+
 				fmt.Scan(&input)
 				switch input {
-					case cancel:
-						fmt.Println(productList)
-						break
-					default:
-						if check_if_exist(productList, input){
-							productList = append(productList, input)
-							fmt.Println("добавлен")
-						}else {
-							fmt.Println("продукт существует")
-						}
-							
+				case end:
+					fmt.Println(productList)
+					break
+				default:
+					if check_if_exist(productList, input) {
+						productList = append(productList, input)
+						fmt.Println("добавлен")
+					} else {
+						fmt.Println("продукт существует")
+					}
+
 				}
 			}
 		case show_products:
-				fmt.Println(productList)
+			fmt.Println(productList)
 		case add_to_cart:
 			fmt.Println("Напишите название продукта чтобы добавить в корзинку")
 			var product string
-			for ok := true; ok; ok = (product != "cancel"){
+			for ok := true; ok; ok = (product != "buy") {
 				fmt.Scan(&product)
 				switch product {
-				case cancel:
+				case buy:
 					fmt.Println(cartList)
+					fmt.Println("Заказ оформлен!")
+					cartList = nil
 					break
 				default:
-					if !check_if_exist(productList, product){
-						if check_if_exist(cartList, product){
+					if !check_if_exist(productList, product) {
+						if check_if_exist(cartList, product) {
 							cartList = append(cartList, product)
+							productList = remove(productList, product)
 							fmt.Println("добавлен")
-						}else {
+						} else {
 							fmt.Println("продукт существует в корзинке")
 						}
-					}else{
+					} else {
 						fmt.Println("продукт не существует в списке")
 					}
 				}
-				
-				
+
 			}
-			
-	}
+
+		}
 
 	}
 }
@@ -117,6 +124,17 @@ func check_if_exist(productList []string, product string) bool {
 		if v == product {
 			return false
 		}
+	}
+	return true
 }
-return true
+
+func remove(productList []string, product string) []string {
+	for i, v := range productList {
+		if v == product {
+			productList = append(productList[:i], productList[i+1:]...)
+			fmt.Println(productList)
+			return productList
+		}
+	}
+	return productList
 }
