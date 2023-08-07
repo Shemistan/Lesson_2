@@ -34,11 +34,12 @@ func main() {
 
 		switch command {
 		case help:
-			fmt.Println("reg - Регистрация пользователя.")
-			fmt.Println("auth - Авторизация")
-			fmt.Println("exit - Закончить работу.")
-			fmt.Println("add_product - Добавить продукт в корзину.")
-			fmt.Println("order - Заказать товары из корзины.")
+			fmt.Println("\n",
+				reg, "- Регистрация пользователя.\n",
+				auth, "- Авторизация.\n",
+				exit, "- Закончить работу.\n",
+				add_product, "- Добавить продукт в корзину.\n",
+				order, "- Заказать товары из корзины.\n")
 		case reg:
 			fmt.Println("Введите логин и пароль в формате login_password:")
 			fmt.Scan(&command) 
