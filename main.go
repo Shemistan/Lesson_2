@@ -46,14 +46,14 @@ func main() {
 			for _, v := range userList {
 				if v == command {
 					fmt.Println("Добро пожаловать в магази")
-					auth_flag := 1
+					auth_flag = 1
 					break
 				}
-
-				if auth_flag == 0 {
-					fmt.Println("Вы не зарегистрированны")
-				}
 			}
+			if auth_flag == 0 {
+				fmt.Println("Вы не зарегистрированны")
+			}
+
 		case add_product:
 			fmt.Println("Введите название продукта")
 			fmt.Scan(&command)
@@ -90,15 +90,17 @@ func main() {
 		case order:
 			fmt.Println("У вас в корзине:")
 			fmt.Println(orderList)
-			fmt.Println("Нажмите 'yes' - для продолжения покупки, 'no' - для отмены")
-			fmt.Scan(&command)
 			for command != "yes" || command != "no" {
+				fmt.Println("Нажмите 'yes' - для продолжения покупки, 'no' - для отмены")
+				fmt.Scan(&command)
 				if command == "yes" {
 					fmt.Println("Спасибо за покупку")
 					orderList = orderList[:0]
+					break
 				}
 				if command == "no" {
 					fmt.Println("Спасибо за покупку")
+					break
 				} else {
 					fmt.Println("Вы ввели неправильную команду")
 				}
