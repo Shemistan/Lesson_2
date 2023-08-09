@@ -21,13 +21,17 @@ func main() {
 	productList := make([]string, 0, 10)
 
 	for command != exit {
-		fmt.Println("*******  Menu   ******** \n")
-		fmt.Println(auth, "=====> для авторизация")
-		fmt.Println(reg, "========> для регистрация")
-		fmt.Println(add_product, "=====> добавить продукт в корзину")
-		fmt.Println(order, "=====> показать список продуктов")
-		fmt.Println(exit, "=====> для выхода программы")
-		fmt.Print("\nВыбирите команду: ")
+		fmt.Println("\n *******  Menu   ******** \n")
+		if hasValue {
+			fmt.Println(add_product, "=====> добавить продукт в корзину")
+			fmt.Println(order, "=====> показать список продуктов")
+			fmt.Println(exit, "=====> для выхода программы")
+			fmt.Print("\nВыбирите команду: ")
+		} else {
+			fmt.Println(auth, "=====> для авторизация")
+			fmt.Println(reg, "========> для регистрация")
+			fmt.Print("\nВыбирите команду: ")
+		}
 		fmt.Scan(&command)
 		switch command {
 		case exit:
@@ -89,7 +93,7 @@ func main() {
 				break
 			}
 			products := fmt.Sprintf("%q", productList)
-			fmt.Println("\nВы купили:", strings.Trim(fmt.Sprint(products), "[]"), "\n")
+			fmt.Println("\nВы купили:", strings.Trim(fmt.Sprint(products), "[]"))
 			productList = productList[:0]
 			break
 		default:
