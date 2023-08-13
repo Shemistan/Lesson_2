@@ -13,6 +13,29 @@ const (
 	order       = "order"
 )
 
+func checkUser(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+
+			return true
+		}
+	}
+	return false
+}
+
+func mainMenu(hasValue bool) {
+	if hasValue {
+		fmt.Println(add_product, "=====> добавить продукт в корзину")
+		fmt.Println(order, "=====> показать список продуктов")
+		fmt.Println(exit, "=====> для выхода программы")
+		fmt.Print("\nВыбирите команду: ")
+	} else {
+		fmt.Println(auth, "=====> для авторизация")
+		fmt.Println(reg, "========> для регистрация")
+		fmt.Print("\nВыбирите команду: ")
+	}
+}
+
 func main() {
 	var command string
 	var user string
@@ -21,17 +44,7 @@ func main() {
 	productList := make([]string, 0, 10)
 
 	for command != exit {
-		fmt.Println("\n *******  Menu   ******** \n")
-		if hasValue {
-			fmt.Println(add_product, "=====> добавить продукт в корзину")
-			fmt.Println(order, "=====> показать список продуктов")
-			fmt.Println(exit, "=====> для выхода программы")
-			fmt.Print("\nВыбирите команду: ")
-		} else {
-			fmt.Println(auth, "=====> для авторизация")
-			fmt.Println(reg, "========> для регистрация")
-			fmt.Print("\nВыбирите команду: ")
-		}
+		mainMenu(hasValue)
 		fmt.Scan(&command)
 		switch command {
 		case exit:
@@ -40,12 +53,7 @@ func main() {
 			fmt.Print("Введите логин и пароль в таком виде login_passwor: ")
 			fmt.Scan(&command)
 
-			for _, v := range userList {
-				if v == command {
-					hasValue = true
-				}
-			}
-			if hasValue {
+			if checkUser(userList, command) {
 				message := fmt.Sprintf("Пользователь с логином %s уже существует", command)
 				fmt.Println("\n *****", message, "*****")
 				fmt.Println("***** Попробуйте заново зарегистрироваться ***** \n")
@@ -59,13 +67,7 @@ func main() {
 			fmt.Print("Введите логин и пароль в таком виде login_passwor: ")
 			fmt.Scan(&command)
 
-			for _, v := range userList {
-				if v == command {
-					hasValue = true
-				}
-			}
-
-			if hasValue {
+			if checkUser(userList, command) {
 				message := fmt.Sprintf("\n ***** Добро пожаловать %s в магазин *****", command)
 				fmt.Println("\n", message)
 				user = command
