@@ -32,11 +32,10 @@ func main() {
 					fmt.Println("Пользователь уже существует")
 					return
 				}
+				userList = append(userList, command)
+				message := fmt.Sprintf("Пользователь %s успешно добавлен", command)
+				fmt.Println(message)
 			}
-			userList = append(userList, command)
-
-			message := fmt.Sprintf("Пользователь %s успешно добавлен", command)
-			fmt.Println(message)
 
 		case auth:
 			fmt.Println("Введите логин и пароль в таком виде login_password")
@@ -45,21 +44,26 @@ func main() {
 			for _, v := range userList {
 				if v == command {
 					fmt.Println("Добро пожаловать в магазин!")
-					fmt.Println("Введите команду \n Для добавление продукта - add_product \n Для вывода корзины - order")
-					switch command1 {
-					case add_product:
-						fmt.Println("Введите продукт")
+					for command1 != exit {
+						fmt.Println("Введите команду \n Для добавление продукта - add_product \n Для вывода корзины - order \n Для выхода - exit") // Сделать красивый вывод, вывести список команд на этом шаге
 						fmt.Scan(&command1)
-						productList = append(productList, command1)
-						message := fmt.Sprintf("Продукт %s успешно добавлен", command1)
-						fmt.Println(message)
+						switch command1 {
+						case exit:
+							break
+						case add_product:
+							fmt.Println("Введите продукт")
+							fmt.Scan(&command1)
+							productList = append(productList, command1)
+							message := fmt.Sprintf("Продукт %s успешно добавлен", command1)
+							fmt.Println(message)
 
-					case order:
-						message := fmt.Sprintf("Вы купили %s", productList)
-						fmt.Println(message)
-						fmt.Println("Корзина очищена")
-						fmt.Println(productList)
-						break
+						case order:
+							message := fmt.Sprintf("Вы купили %s", productList)
+							fmt.Println(message)
+							fmt.Println("Корзина очищена")
+							productList = nil
+							break
+						}
 					}
 				} else {
 					fmt.Println("Вы не зарегистрированны")
