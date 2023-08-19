@@ -10,7 +10,7 @@ const (
 
 func main() {
 	var command string
-	userList := []string{"user1_password1", "user1_password1"}
+	userList := []string{"user1_password1", "user2_password2"}
 	productList := make([]string, 0, 10)
 
 	_ = productList
