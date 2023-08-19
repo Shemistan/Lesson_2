@@ -48,7 +48,7 @@ func main() {
 
 			fmt.Println(userList)
 		case auth:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
 
 			for _, v := range userList {
