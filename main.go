@@ -88,6 +88,17 @@ func main() {
 			} else {
 				fmt.Println("Вы не зарегистрированны")
 			}
+		case cancel:
+			if currentUser != "" {
+				if len(productList) == 0 {
+					fmt.Println("Корзина пуста")
+				} else {
+					productList = []string{}
+					fmt.Println("Корзина очищена")
+				}
+			} else {
+				fmt.Println("Вы не зарегистрированны")
+			}
 		}
 	}
 }
