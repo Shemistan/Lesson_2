@@ -40,6 +40,7 @@ func main() {
 		case exit:
 			break
 		case reg:
+			productList = []string{}
 			currentUser = ""
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
@@ -54,6 +55,7 @@ func main() {
 				fmt.Println(userList)
 			}
 		case auth:
+			productList = []string{}
 			currentUser = ""
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
