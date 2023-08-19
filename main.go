@@ -41,12 +41,16 @@ func main() {
 		case reg:
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
-			userList = append(userList, command)
+			if userExists(userList, command) {
+				fmt.Println("Этот пользователь уже существует")
+			} else {
+				userList = append(userList, command)
 
-			message := fmt.Sprintf("Пользователь %s успешно добавлен", command)
-			fmt.Println(message)
+				message := fmt.Sprintf("Пользователь %s успешно добавлен", command)
+				fmt.Println(message)
 
-			fmt.Println(userList)
+				fmt.Println(userList)
+			}
 		case auth:
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
@@ -62,6 +66,15 @@ func main() {
 			}
 		}
 	}
+}
+
+func userExists(users []string, newUser string) bool {
+	for _, element := range users {
+		if element == newUser {
+			return true
+		}
+	}
+	return false
 }
 
 // Реализовать следующие АПИ
