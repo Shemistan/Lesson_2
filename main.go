@@ -3,9 +3,12 @@ package main
 import "fmt"
 
 const (
-	exit = "exit"
-	auth = "auth"
-	reg  = "reg"
+	exit       = "exit"
+	auth       = "auth"
+	reg        = "reg"
+	addProduct = "add_product"
+	order      = "order"
+	cancel     = "cancel"
 )
 
 func main() {
