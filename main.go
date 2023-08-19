@@ -21,7 +21,7 @@ const (
 
 func main() {
 	var command string
-	isAuthorized := false
+	currentUser := ""
 	userList := []string{"user1_password1", "user2_password2"}
 	productList := make([]string, 0, 10)
 
@@ -40,7 +40,7 @@ func main() {
 		case exit:
 			break
 		case reg:
-			isAuthorized = false
+			currentUser = ""
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
 			if userExists(userList, command) {
@@ -54,23 +54,37 @@ func main() {
 				fmt.Println(userList)
 			}
 		case auth:
-			isAuthorized = false
+			currentUser = ""
 			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
 
 			if userExists(userList, command) {
-				isAuthorized = true
+				currentUser = command
 				fmt.Println("Добро пожаловать в магази")
 			} else {
 				fmt.Println("Вы не зарегистрированны")
 			}
 
 		case addProduct:
-			if isAuthorized {
+			if currentUser != "" {
 				fmt.Println("Введите продукт")
 				fmt.Scan(&command)
 				productList = append(productList, command)
 				fmt.Printf("%s добавлен в корзину\n", command)
+			} else {
+				fmt.Println("Вы не зарегистрированны")
+			}
+		case order:
+			if currentUser != "" {
+				if len(productList) == 0 {
+					fmt.Println("Корзина пуста")
+				} else {
+					fmt.Printf("Чек (%s):\n", currentUser)
+					for i := range productList {
+						fmt.Println(i+1, productList[i])
+					}
+					productList = []string{}
+				}
 			} else {
 				fmt.Println("Вы не зарегистрированны")
 			}
