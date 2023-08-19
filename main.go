@@ -10,6 +10,14 @@ const (
 	order      = "order"
 	cancel     = "cancel"
 )
+const (
+	regDescription        = reg + " - регистрация нового профиля"
+	authDescription       = auth + " - авторизация в существующий профиль"
+	addProductDescription = addProduct + " - добавить продукт в корзину"
+	orderDescription      = order + " - создаёт чек и очищает корзину"
+	exitDescription       = exit + " - выход из приложения"
+	cancelDescription     = cancel + " - очищает корзину"
+)
 
 func main() {
 	var command string
@@ -19,6 +27,12 @@ func main() {
 	_ = productList
 	for command != exit {
 		fmt.Println("Введите команду") // Сделать красивый вывод, вывести список команд на этом шаге
+		fmt.Println(regDescription)
+		fmt.Println(authDescription)
+		fmt.Println(addProductDescription)
+		fmt.Println(orderDescription)
+		fmt.Println(exitDescription)
+		fmt.Println(cancelDescription)
 		fmt.Scan(&command)
 
 		switch command {
