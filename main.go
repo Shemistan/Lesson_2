@@ -22,7 +22,7 @@ func main() {
 		case exit:
 			break
 		case reg:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
 			userList = append(userList, command)
 
