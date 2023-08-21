@@ -12,7 +12,7 @@ const (
 
 func main() {
 	var command string
-	userList := []string{"user1_password1", "user2_password2"} // Примеры пользователей
+	var userList []string
 	productList := make([]string, 0, 10)
 
 	authenticated := false
