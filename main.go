@@ -6,44 +6,68 @@ const (
 	exit = "exit"
 	auth = "auth"
 	reg  = "reg"
+	addProduct = "add_product"
+	order = "order"
 )
 
 func main() {
 	var command string
-	userList := []string{"user1_password1", "user1_password1"}
+	userList := []string{"user1_password1", "user2_password2"}
 	productList := make([]string, 0, 10)
 
-	_ = productList
 	for command != exit {
-		fmt.Println("Введите команду") // Сделать красивый вывод, вывести список команд на этом шаге
+		fmt.Print("\n Введите команду:\n exit - Выход\n auth - Авторизация\n reg - Регистрация\n add_product - Добавить продукт в корзину\n order - Завершить покупку\n\n") // Сделать красивый вывод, вывести список команд на этом шаге
 		fmt.Scan(&command)
 
+sw:
 		switch command {
 		case exit:
 			break
 		case reg:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("\n Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command) // Сделать так, что бы выводил сообщение, если пользователь уже существует
+
+			for _, u := range userList {
+				if u == command {
+					fmt.Println("\n Пользователь уже существует!")
+					break sw
+				}
+			}
+
 			userList = append(userList, command)
 
-			message := fmt.Sprintf("Пользователь %s успешно добавлен", command)
+			message := fmt.Sprintf("\n Пользователь %s успешно добавлен", command)
 			fmt.Println(message)
-
 			fmt.Println(userList)
 		case auth:
-			fmt.Println("Введите логин и пароль в таком виде login_passwor")
+			fmt.Println("\n Введите логин и пароль в таком виде login_password")
 			fmt.Scan(&command)
 
 			for _, v := range userList {
 				if v == command {
-					fmt.Println("Добро пожаловать в магази")
-
+					fmt.Println("\n Добро пожаловать в магазин!")
 				} else {
-					fmt.Println("Вы не зарегистрированны")
+					fmt.Println("\n Вы не зарегистрированы!")
 				}
 
 			}
+		case addProduct:
+			fmt.Println("\n Введите название товара")
+			fmt.Scan(&command)
+
+			productList = append(productList, command)
+		case order:
+			fmt.Println("\n Список продуктов, которые вы приобрели:")
+
+			for _, p := range productList {
+				fmt.Println(p)
+			}
+			productList = []string{}
+			fmt.Println("")
+		default: 
+			fmt.Println("\n Такой команды не существует!")
 		}
+	
 	}
 }
 
